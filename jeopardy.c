@@ -16,6 +16,7 @@
 // Put macros or constants here using #define
 #define BUFFER_LEN 256
 #define NUM_PLAYERS 4
+//#define MAX_LEN 100
 
 // Put global environment variables here
 
@@ -28,27 +29,45 @@ void show_results(player *players, int num_players);
 
 int main(int argc, char *argv[])
 {
-    // An array of 4 players, may need to be a pointer if you want it set dynamically
-    player players[NUM_PLAYERS];
-    
-    // Input buffer and and commands
-    char buffer[BUFFER_LEN] = { 0 };
+  // An array of 4 players, may need to be a pointer if you want it set dynamically
+  player players[NUM_PLAYERS];
+  
+  // Input buffer and and commands
+  char buffer[BUFFER_LEN] = { 0 };
 
-    // Display the game introduction and initialize the questions
-    initialize_game();
+  // Display the game introduction and initialize the questions
+//  initialize_game();
 
-    // Prompt for players names
-    
-    // initialize each of the players in the array
+  // Prompt for players names
+  for (int i = 0; i < NUM_PLAYERS; i++)
+  {
+    printf("Enter name of player %d :", i + 1);
+    fgets(players[i].name, MAX_LEN, stdin);
+    // Remove the newline character that fgets reads at the end of the line
+    players[i].name[strcspn(players[i].name, "\n")] = 0;
 
-    // Perform an infinite loop getting command input from users until game ends
-    while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
-    {
-        // Call functions from the questions and players source files
+    // Initialize player's score to be 0
+    players[i].score = 0;
 
-        // Execute the game until all questions are answered
+    // Clear the input buffer to handle any leftover characters before reading the next string
+    while (getchar() != '\n');
+  }
+  // Optionally, print the entered details to verify
 
-        // Display the final results and exit
-    }
-    return EXIT_SUCCESS;
+  for(int i = 0; i < NUM_PLAYERS; i++)
+  {
+      printf("Player %d Name: %s, Score: %d\n", i + 1, players[i].name, players[i].score);
+  }
+  // initialize each of the players in the array
+
+  // Perform an infinite loop getting command input from users until game ends
+  while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
+  {
+      // Call functions from the questions and players source files
+
+      // Execute the game until all questions are answered
+
+      // Display the final results and exit
+  }
+  return EXIT_SUCCESS;
 }
