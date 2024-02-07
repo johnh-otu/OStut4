@@ -10,14 +10,16 @@
 #include <string.h>
 #include "questions.h"
 
+const int questions_per_category = NUM_QUESTIONS / NUM_CATEGORIES;
+question questions[NUM_QUESTIONS];
+
 // Initializes the array of questions for the game
 void initialize_game(void)
 {
     printf("Welcome to Jeopardy!\n");
     printf("Loading questions...\n");
+
     // initialize each question struct and assign it to the questions array
-    int questions_per_category = NUM_QUESTIONS / NUM_CATEGORIES;
-    
     FILE *input_file = fopen("./questions.input", "r");
     if (!input_file) { printf("Could not load questions from questions.input!\n"); return; }
 
@@ -27,25 +29,43 @@ void initialize_game(void)
     for (int c = 0; c < NUM_CATEGORIES; c++) {
 	    for (int i = 0; i < questions_per_category; i++) {
 		    strcpy(questions[q].category, categories[c]); //set category
-		    questions[q].answered = false; //set answered to false
+		    questions[q].answered = (i%2 == 0); //set answered to false
 
 		    fgets(buffer, MAX_LEN, input_file); //get value
-		    questions[q].value = atoi(buffer); //set value
+		    questions[q].value = atoi(buffer);
 		    
 		    fgets(questions[q].question, MAX_LEN, input_file); //get question
 		    fgets(questions[q].answer, MAX_LEN, input_file); //get answer
-		    fgets(NULL, 0, input_file); //newline
+		    fgets(buffer, 5, input_file); //newline
+		    
+		    //printf("category:%s value:%d q:%s a:%s\n", categories[c], questions[q].value, questions[q].question, questions[q].answer);
+		    
 		    q++;
 	    }
     }
 
+    free(buffer);
     printf("%d questions loaded successfully. Ready to play!\n", NUM_QUESTIONS);
 }
 
 // Displays each of the remaining categories and question dollar values that have not been answered
 void display_categories(void)
 {
-    // print categories and dollar values for each unanswered question in questions array
+	// print categories and dollar values for each unanswered question in questions array
+	for (int i = 0; i < NUM_CATEGORIES; i++) {
+		printf("%s\t", categories[i]);
+	}
+	printf("\n");
+	for (int i = 0; i < questions_per_category; i++)
+	{
+		for (int j = 0; j < NUM_CATEGORIES; j++) {
+			if(questions[j*4 + i].answered)
+				printf("[ - ]\t\t");
+			else
+				printf("$%d\t\t", questions[j*4 + i].value);
+		}
+		printf("\n");
+	}
 }
 
 // Displays the question for the category and dollar value
