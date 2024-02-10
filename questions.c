@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "questions.h"
 
 const int questions_per_category = NUM_QUESTIONS / NUM_CATEGORIES;
@@ -36,8 +37,10 @@ void initialize_game(void)
 		    
 		    fgets(questions[q].question, MAX_LEN, input_file); //get question
 		    fgets(questions[q].answer, MAX_LEN, input_file); //get answer
+		    strcpy(questions[q].answer, toLower(questions[q].answer)); //set to lower
 		    fgets(buffer, 5, input_file); //newline
 		    
+		    //debug
 		    //printf("category:%s value:%d q:%s a:%s\n", categories[c], questions[q].value, questions[q].question, questions[q].answer);
 		    
 		    q++;
@@ -71,19 +74,71 @@ void display_categories(void)
 // Displays the question for the category and dollar value
 void display_question(char *category, int value)
 {
-
+	int i = get_question_index(category, value);
+	if (i > -1) {
+		system("clear");
+		printf("----------------------------------------\n\n");
+		printf("%s\n\n", questions[i].question);	
+		printf("----------------------------------------\n\n");
+	}
+	else {
+		printf("Error: Couldn't retrieve question (%s, %d)\n", category, value);
+	}
 }
 
 // Returns true if the answer is correct for the question for that category and dollar value
 bool valid_answer(char *category, int value, char *answer)
 {
-    // Look into string comparison functions
-    return false;
+	int i = get_question_index(category, value);
+	if(i > -1) {
+		if ( strcmp(questions[i].answer, answer) == 0) {
+			questions[i].answered = true;
+			return true;
+		}
+		else {
+			questions[i].answered = true;
+			return false;
+		}
+	}
+	printf("Error: Couldn't retrieve question (%s, %d)\n", category, value);
+	return false;
 }
 
 // Returns true if the question has already been answered
 bool already_answered(char *category, int value)
 {
-    // lookup the question and see if it's already been marked as answered
-    return false;
+	// lookup the question and see if it's already been marked as answered
+	int i = get_question_index(category, value);
+ 	if (i > -1) {
+		return questions[i].answered;
+	}
+	return false;
+}
+
+// Converts char array to char array with all lowercase characters
+char *toLower(char *string)
+{
+	char output[MAX_LEN];
+	for (int i = 0; i < MAX_LEN; i++) {
+		if (string[i] != '\0')
+			output[i] = tolower(string[i]);
+		else
+			return output;
+	}
+}
+
+// Returns index of first question from given category with given value based on location in questions array
+// Returns -1 on failed attempt
+int get_question_index(char *category, int value)
+{
+	for (int c = 0; c < NUM_CATEGORIES; c++) {
+		if (strcmp(category, categories[c]) == 0) {
+			for (int q = 0; q < questions_per_category; q++) {
+				if (questions[c*4 + q].value == value) {
+					return c*4 + q;
+				}
+			}
+		}
+	}
+	return -1;
 }

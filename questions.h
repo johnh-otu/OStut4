@@ -51,4 +51,11 @@ extern bool valid_answer(char *category, int value, char *answer);
 // Returns true if the question has already been answered
 extern bool already_answered(char *category, int value);
 
+// Converts char array to char array with all lowercase characters
+extern char *toLower(char *string);
+
+// Returns index of first question from given category with given value based on location in questions array
+// Returns -1 on failed attempt
+extern int get_question_index(char *category, int value);
+
 #endif /* QUESTIONS_H_ */
