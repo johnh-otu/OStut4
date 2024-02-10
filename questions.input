@@ -1,0 +1,47 @@
+200
+This general-purpose programming language, developed at Bell Labs in 1972, is known for it use in systems and network programming.
+C
+
+400
+This high-level interpreted programming language is commonly used for developping artificial intelligence systems.
+Python
+
+600
+This term refers to the section of code where a variable is accessible.
+scope
+
+800
+This programming paradigm uses conceptual objects that contain methods and attributes.
+object-oriented programming
+
+200
+This sorting algorithm works by repeatedly swapping the adjacent elements ifthey are in the wrong order.
+bubble sort
+
+400
+This iterative search algorithm uses the "divide and conquer" principle, making it particularily efficient for large data sets.
+binary search
+
+600
+This sorting algorithm was used in the early 1900's to sort punch cards by sorting each of the indiviual digits of data punched into the card.
+radix sort
+
+800
+This informed-search algorithm uses a cost and heuristic function to find an optimal solution.
+A* search
+
+200
+This type of database model organizes data into one or more tables of columns and rows, with a unique key for each row.
+a relational database
+
+400
+This SQL command is used to retrieve data from a database.
+SELECT
+
+600
+This type of database is designed to handle data across many commodity servers, providing high availability and horizontal scalability.
+distributed database
+
+800
+This NoSQL database program, initially released in 2009, uses JSON-like documents with optional schemas.
+MongoDB
