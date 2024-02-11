@@ -29,6 +29,7 @@ void initialize_game(void)
 
     for (int c = 0; c < NUM_CATEGORIES; c++) {
 	    for (int i = 0; i < questions_per_category; i++) {
+
 		    strcpy(questions[q].category, categories[c]); //set category
 		    questions[q].answered = (i%2 == 0); //set answered to false
 
@@ -37,7 +38,7 @@ void initialize_game(void)
 		    
 		    fgets(questions[q].question, MAX_LEN, input_file); //get question
 		    fgets(questions[q].answer, MAX_LEN, input_file); //get answer
-		    strcpy(questions[q].answer, toLower(questions[q].answer)); //set to lower
+		    toLower(questions[q].answer); //set to lower
 		    fgets(buffer, 5, input_file); //newline
 		    
 		    //debug
@@ -91,11 +92,39 @@ bool valid_answer(char *category, int value, char *answer)
 {
 	int i = get_question_index(category, value);
 	if(i > -1) {
-		if ( strcmp(questions[i].answer, answer) == 0) {
+		toLower(answer);
+		if ( strcmp("what is " + questions[i].answer, answer)) {
+			strcpy(answer, questions[i].answer);
+			questions[i].answered = true;
+			return true;
+		}
+		else if ( strcmp("what is " + questions[i].answer + "?", answer)) {
+			strcpy(answer, questions[i].answer);
+			questions[i].answered = true;
+			return true;
+		}
+		else if ( strcmp("who is " + questions[i].answer, answer)) {
+			strcpy(answer, questions[i].answer);
+			questions[i].answered = true;
+			return true;
+		}
+		else if ( strcmp("who is " + questions[i].answer + "?", answer)) {
+			strcpy(answer, questions[i].answer);
+			questions[i].answered = true;
+			return true;
+		}
+		else if ( strcmp("what are " + questions[i].answer, answer)) {
+			strcpy(answer, questions[i].answer);
+			questions[i].answered = true;
+			return true;
+		}
+		else if ( strcmp("what are " + questions[i].answer + "?", answer)) {
+			strcpy(answer, questions[i].answer);
 			questions[i].answered = true;
 			return true;
 		}
 		else {
+			strcpy(answer, questions[i].answer);
 			questions[i].answered = true;
 			return false;
 		}
@@ -116,14 +145,13 @@ bool already_answered(char *category, int value)
 }
 
 // Converts char array to char array with all lowercase characters
-char *toLower(char *string)
+void toLower(char *string)
 {
-	char output[MAX_LEN];
 	for (int i = 0; i < MAX_LEN; i++) {
 		if (string[i] != '\0')
-			output[i] = tolower(string[i]);
+			string[i] = tolower(string[i]);
 		else
-			return output;
+			return;
 	}
 }
 
