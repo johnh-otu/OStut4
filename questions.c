@@ -91,7 +91,6 @@ void display_question(char *category, int value)
 		printf("Error: Couldn't retrieve question (%s, %d)\n", category, value);
 	}
 }
-
 /*
 bool valid_answer(char *category, int value, char *actual_answer) {
     // Convert actual_answer to lowercase, trim whitespace, etc.
@@ -110,23 +109,7 @@ bool valid_answer(char *category, int value, char *actual_answer) {
     return false;
 }
 */
-/*
-bool valid_answer(char *category, int value, char *actual_answer) {
-    int i = get_question_index(category, value);
-    if(i > -1) {
-        toLower(actual_answer); // Assuming toLower modifies the string in place
-        //toLower(questions[i].answer); // Ensure the stored answer is in lowercase for comparison
 
-printf("User's answer: '%s'\n", actual_answer);
-printf("Expected answer: '%s'\n", questions[i].answer);
-        // Since we're now working with one-word answers, directly compare
-        if (strcmp(questions[i].answer, actual_answer) == 0) {
-            questions[i].answered = true;
-            return true;
-        }
-    }
-    return false;
-} */
 bool valid_answer(char *category, int value, char *actual_answer) {
     toLower(actual_answer); // Convert user's answer to lowercase
     int i = get_question_index(category, value);
