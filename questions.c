@@ -5,6 +5,8 @@
  * All rights reserved.
  *
  */
+
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -87,3 +89,4 @@ bool already_answered(char *category, int value)
     // lookup the question and see if it's already been marked as answered
     return false;
 }
+*/
