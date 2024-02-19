@@ -40,6 +40,8 @@ void initialize_game(void)
 		    
 		    fgets(questions[q].question, MAX_LEN, input_file); //get question
 		    fgets(questions[q].answer, MAX_LEN, input_file); //get answer
+        questions[q].answer[strcspn(questions[q].answer, "\n")] = '\0';
+
 		    toLower(questions[q].answer); //set to lower
 		    fgets(buffer, 5, input_file); //newline
 		    
@@ -90,6 +92,60 @@ void display_question(char *category, int value)
 	}
 }
 
+/*
+bool valid_answer(char *category, int value, char *actual_answer) {
+    // Convert actual_answer to lowercase, trim whitespace, etc.
+    // Assuming actual_answer now holds the entire answer phrase correctly processed
+    toLower(actual_answer); // Assuming toLower modifies the string in place
+
+    int i = get_question_index(category, value);
+    if(i > -1) {
+      toLower(questions[i].answer); // Ensure the stored answer is in lowercase for comparison
+        // Assuming toLower modifies the string in place and you've handled multi-word answers correctly
+        if (strcmp(questions[i].answer, actual_answer) == 0) {
+            questions[i].answered = true;
+            return true;
+        }
+    }
+    return false;
+}
+*/
+/*
+bool valid_answer(char *category, int value, char *actual_answer) {
+    int i = get_question_index(category, value);
+    if(i > -1) {
+        toLower(actual_answer); // Assuming toLower modifies the string in place
+        //toLower(questions[i].answer); // Ensure the stored answer is in lowercase for comparison
+
+printf("User's answer: '%s'\n", actual_answer);
+printf("Expected answer: '%s'\n", questions[i].answer);
+        // Since we're now working with one-word answers, directly compare
+        if (strcmp(questions[i].answer, actual_answer) == 0) {
+            questions[i].answered = true;
+            return true;
+        }
+    }
+    return false;
+} */
+bool valid_answer(char *category, int value, char *actual_answer) {
+    toLower(actual_answer); // Convert user's answer to lowercase
+    int i = get_question_index(category, value);
+    if(i > -1) {
+        char stored_answer[MAX_LEN];
+        strcpy(stored_answer, questions[i].answer);
+        toLower(stored_answer); // Convert stored answer to lowercase
+ printf("User's answer: '%s'\n", actual_answer);
+printf("Expected answer: '%s'\n", questions[i].answer);
+printf("Expected answer: '%s'\n", stored_answer);
+        if (strcmp(stored_answer, actual_answer) == 0) {
+            questions[i].answered = true;
+            return true;
+        }
+    }
+    return false;
+}
+
+/*
 // Correct the string comparison logic
 bool valid_answer(char *category, int value, char *answer)
 {
@@ -141,6 +197,7 @@ bool valid_answer(char *category, int value, char *answer)
     printf("Error: Couldn't retrieve question (%s, %d)\n", category, value);
     return false;
 }
+*/
 /*
 // Returns true if the answer is correct for the question for that category and dollar value
 bool valid_answer(char *category, int value, char *answer)

@@ -28,5 +28,7 @@ extern void update_score(player *players, int num_players, char *name, int score
 // Initialize each player in the array with name and initial score
 extern void initialize_players(player *players, int num_players);
 
+void show_scores(const player *players, int num_players);
+
 #endif /* PLAYERS_H_ */
 

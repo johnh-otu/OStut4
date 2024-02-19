@@ -33,6 +33,15 @@ void update_score(player *players, int num_players, char *name, int score)
     }
 }
 
+// Displays the current score for each player
+void show_scores(const player *players, int num_players) {
+    printf("\nCurrent scores:\n");
+    for (int i = 0; i < num_players; i++) {
+        printf("Player %s: %d\n", players[i].name, players[i].score);
+    }
+    printf("\n"); // Add an extra newline for better readability
+}
+
 // Initialize each player in the array with name and initial score
 void initialize_players(player *players, int num_players)
 {
