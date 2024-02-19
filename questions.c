@@ -6,7 +6,6 @@
  *
  */
 
-/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,7 +32,8 @@ void initialize_game(void)
 	    for (int i = 0; i < questions_per_category; i++) {
 
 		    strcpy(questions[q].category, categories[c]); //set category
-		    questions[q].answered = (i%2 == 0); //set answered to false
+		    //questions[q].answered = (i%2 == 0); //set answered to false
+        questions[q].answered = false; // set all questions unanswered as it is initialized
 
 		    fgets(buffer, MAX_LEN, input_file); //get value
 		    questions[q].value = atoi(buffer);
@@ -51,6 +51,7 @@ void initialize_game(void)
     }
 
     free(buffer);
+    fclose(input_file); // Ensure the file is closed after its use
     printf("%d questions loaded successfully. Ready to play!\n", NUM_QUESTIONS);
 }
 
@@ -65,7 +66,7 @@ void display_categories(void)
 	for (int i = 0; i < questions_per_category; i++)
 	{
 		for (int j = 0; j < NUM_CATEGORIES; j++) {
-			if(questions[j*4 + i].answered)
+			if(questions[j*4 + i].answered) // j*4 hardcode?
 				printf("[ - ]\t\t");
 			else
 				printf("$%d\t\t", questions[j*4 + i].value);
@@ -89,6 +90,58 @@ void display_question(char *category, int value)
 	}
 }
 
+// Correct the string comparison logic
+bool valid_answer(char *category, int value, char *answer)
+{
+    int i = get_question_index(category, value);
+    if(i > -1) {
+        char temp_answer[MAX_LEN]; // Temporary buffer for comparison
+        toLower(answer); // Ensure the provided answer is in lowercase
+
+        // Formulate the correct answer in various formats and compare
+        sprintf(temp_answer, "what is %s", questions[i].answer);
+        if (strcmp(temp_answer, answer) == 0) {
+            questions[i].answered = true;
+            return true;
+        }
+
+        sprintf(temp_answer, "what is %s?", questions[i].answer);
+        if (strcmp(temp_answer, answer) == 0) {
+            questions[i].answered = true;
+            return true;
+        }
+
+        sprintf(temp_answer, "who is %s", questions[i].answer);
+        if (strcmp(temp_answer, answer) == 0) {
+            questions[i].answered = true;
+            return true;
+        }
+
+        sprintf(temp_answer, "who is %s?", questions[i].answer);
+        if (strcmp(temp_answer, answer) == 0) {
+            questions[i].answered = true;
+            return true;
+        }
+
+        sprintf(temp_answer, "what are %s", questions[i].answer);
+        if (strcmp(temp_answer, answer) == 0) {
+            questions[i].answered = true;
+            return true;
+        }
+
+        sprintf(temp_answer, "what are %s?", questions[i].answer);
+        if (strcmp(temp_answer, answer) == 0) {
+            questions[i].answered = true;
+            return true;
+        }
+
+        // If none of the formats match, the answer is considered incorrect
+        return false;
+    }
+    printf("Error: Couldn't retrieve question (%s, %d)\n", category, value);
+    return false;
+}
+/*
 // Returns true if the answer is correct for the question for that category and dollar value
 bool valid_answer(char *category, int value, char *answer)
 {
@@ -134,6 +187,7 @@ bool valid_answer(char *category, int value, char *answer)
 	printf("Error: Couldn't retrieve question (%s, %d)\n", category, value);
 	return false;
 }
+*/
 
 // Returns true if the question has already been answered
 bool already_answered(char *category, int value)
@@ -172,4 +226,4 @@ int get_question_index(char *category, int value)
 	}
 	return -1;
 }
-*/
+
