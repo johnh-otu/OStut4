@@ -11,7 +11,7 @@
 #include "players.h"
 
 // Returns true if the player name matches one of the existing players
-bool player_exists(player *players, int num_players, char *name)
+/*bool player_exists(player *players, int num_players, char *name)
 {
     return false;
 }
@@ -21,4 +21,4 @@ bool player_exists(player *players, int num_players, char *name)
 void update_score(player *players, int num_players, char *name, int score)
 {
     
-}
+}*/

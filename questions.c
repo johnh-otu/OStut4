@@ -5,6 +5,8 @@
  * All rights reserved.
  *
  */
+
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -170,3 +172,4 @@ int get_question_index(char *category, int value)
 	}
 	return -1;
 }
+*/
